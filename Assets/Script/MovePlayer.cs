@@ -4,6 +4,8 @@ using Pathfinding;
 
 public class MovePlayer : MonoBehaviour {
 
+	public bool arrived = true;
+
 	private Vector3 target;
 	
 	//The calculated path
@@ -26,6 +28,7 @@ public class MovePlayer : MonoBehaviour {
 		Path p = ABPath.Construct (transform.position, target, OnPathComplete);
 		AstarPath.StartPath (p);
 		AstarPath.WaitForPath (p);
+		arrived = false;
 	}
 	
 	public void OnPathComplete (Path p) {
@@ -46,6 +49,7 @@ public class MovePlayer : MonoBehaviour {
 		if (currentWaypoint < path.vectorPath.Count) {
 			point = path.vectorPath [currentWaypoint];
 		} else if(currentWaypoint > path.vectorPath.Count){
+			arrived = true;
 			reset();
 			return;
 		}
@@ -65,6 +69,14 @@ public class MovePlayer : MonoBehaviour {
 		transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, turnSpeed * Time.deltaTime);
 		
 		rigidbody.velocity = direction * speed;
+	}
+
+	public void rotateTo(Vector3 destination) {
+		Vector3 direction = (destination - transform.position).normalized;
+		
+		Quaternion _lookRotation = Quaternion.LookRotation (direction);
+		transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, turnSpeed * Time.deltaTime);
+
 	}
 
 	public void reset(){

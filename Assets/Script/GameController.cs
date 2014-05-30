@@ -19,11 +19,12 @@ public class GameController : MonoBehaviour {
 	
 	private float width = 80, hight = 30;
 	private float left = Screen.width-100, top = 10;
-	
-	
+
 	private int scoreTeam1 = 0;
 	private int scoreTeam2 = 0;
-	
+
+	private GameControllerRL controllerRL;
+
 	public void startMatch() {
 		GameObject team1 = GameObject.FindGameObjectWithTag ("team1");
 		GameObject team2 = GameObject.FindGameObjectWithTag ("team2");
@@ -35,6 +36,7 @@ public class GameController : MonoBehaviour {
 		}
 		
 		started = true;
+		controllerRL = GetComponent<GameControllerRL> ();
 	}
 	
 	// Use this for initialization
@@ -120,8 +122,13 @@ public class GameController : MonoBehaviour {
 
 	
 	public void increaseScore(string team) {
-		if(team == "team1") scoreTeam1++;
-		else 		  scoreTeam2++;
+		if(team == "team1") {
+			scoreTeam1++;
+			controllerRL.eventMessageScore(1);
+		}else {
+			scoreTeam2++;
+			controllerRL.eventMessageScore(2);
+		}
 	}
 	
 	public int getScore(string team){

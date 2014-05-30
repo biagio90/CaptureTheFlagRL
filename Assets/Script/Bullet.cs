@@ -35,13 +35,6 @@ public class Bullet : MonoBehaviour {
 				if (pc != null) {
 					pc.killPlayer();
 					if(action!=null) action.enemyKilled();
-				} else {
-					PlayerRL rl = other.gameObject.GetComponent<PlayerRL>();
-					if(rl != null){
-						rl.killPlayer();
-						PlayerRL rlShooter = playerShooter.GetComponent<PlayerRL>();
-						rlShooter.killedEnemy(rl.hasFlag);
-					}
 				}
 			}
 		}

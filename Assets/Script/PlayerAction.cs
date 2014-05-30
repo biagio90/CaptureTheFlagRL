@@ -5,20 +5,14 @@ using System.Collections;
 [RequireComponent(typeof(PlayerController))]
 
 public class PlayerAction : MonoBehaviour {
-	// ACTIONS
-	public enum Actions
-	{
-		GET_FLAG_AND_SCORE,
-		ATTACK_ENEMY_BASE,
-		TAKE_CARE_ENEMY_FLAG
-	};
 
 	// PlayerController
 	public bool finish = false;
 
 	private bool enable = false;
-	private Actions action = Actions.GET_FLAG_AND_SCORE;
+	private constantRL.Actions action = constantRL.Actions.GET_FLAG_AND_SCORE;
 
+	private GameController controller;
 	private PlayerController player;
 	private MovePlayer mover;
 
@@ -58,11 +52,11 @@ public class PlayerAction : MonoBehaviour {
 	void Update () {
 		if (enable) {
 			switch(action) {
-			case Actions.GET_FLAG_AND_SCORE: controllerGetFlag();
+			case constantRL.Actions.GET_FLAG_AND_SCORE: controllerGetFlag();
 				break;
-			case Actions.ATTACK_ENEMY_BASE:	 controllerAttack();
+			case constantRL.Actions.ATTACK_ENEMY_BASE:	 controllerAttack();
 				break;
-			case Actions.TAKE_CARE_ENEMY_FLAG:
+			case constantRL.Actions.TAKE_CARE_ENEMY_FLAG:
 				break;
 
 			}
@@ -77,10 +71,15 @@ public class PlayerAction : MonoBehaviour {
 	private void moveToAttack (){
 		if(movingState == 0){
 			movingState=1;
-			mover.moveTo(enemyBasePos);
+			Vector3 point = getRandomPosition();
+			point = (point - enemyBasePos).normalized * Random.Range(5.0f, 10.0f);
+			mover.moveTo(enemyBasePos+point);
+		}
+		if(movingState==1 && mover.arrived){
+			mover.rotateTo(enemyBasePos);
 		}
 	}
-
+	
 	private void checkForShoot(){
 		if (Time.time > nextTime) {
 			nextTime = Time.time + delay;
@@ -118,7 +117,14 @@ public class PlayerAction : MonoBehaviour {
 	}
 
 	public void enemyKilled(){
-		
+		finish = true;
+		player.updateEvent (constantRL.Events.enemyKilled);
+	}
+
+	public void getKilled(){
+		mover.reset ();
+		finish = true;
+		player.updateEvent (constantRL.Events.killed);
 	}
 
 	private void controllerGetFlag(){
@@ -135,7 +141,7 @@ public class PlayerAction : MonoBehaviour {
 			}
 			break;
 		case 2: if(Vector3.Distance(transform.position, myBasePos) < 1){
-				player.gameController.increaseScore(tag);
+				controller.increaseScore(tag);
 				gameObject.transform.Find("flag").gameObject.SetActive(false);
 				player.hasFlag=false;
 
@@ -143,17 +149,37 @@ public class PlayerAction : MonoBehaviour {
 				finish = true;
 				enable = false;
 
+				player.updateEvent (constantRL.Events.makeScore);
 			}
 			break;
 		}
 	}
 
-	public void startAction(Actions action) {
+	public void startAction(constantRL.Actions action) {
 		this.action = action;
 		movingState = 0;
 		enable = true;
 	}
 
+	/*
+	private Vector3 getRandomFreePosition(){
+		bool free = false;
+		Vector3 ret = new Vector3 ();
+		ret.y = 1;
+		while(!free) {
+			ret.x = Random.Range(-27, 27);
+			ret.z = Random.Range(-20, 20);
+			free = isFree(ret);
+		}
+		return ret;
+	}*/
 
+	private Vector3 getRandomPosition(){
+		Vector3 ret = new Vector3 ();
+		ret.y = 1;
+		ret.x = Random.Range(-27, 27);
+		ret.z = Random.Range(-20, 20);
+		return ret;
+	}
 
 }
