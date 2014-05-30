@@ -11,7 +11,7 @@ public class PlayerRL {
 	private float[,] Qtable;
 
 	public PlayerRL(){
-		Qtable = new float[constantRL.num_actions, constantRL.num_events];
+		Qtable = new float[constantRL.num_states, constantRL.num_actions];
 		// Qtable start empty
 	}
 

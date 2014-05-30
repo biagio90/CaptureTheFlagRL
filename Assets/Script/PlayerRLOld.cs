@@ -125,7 +125,7 @@ public class PlayerRLOld : MonoBehaviour {
 	}
 
 	public void updateState(int eventHappened) {
-		state = constantRL.selectNextState [state, eventHappened];
+//		state = constantRL.selectNextState [state, eventHappened];
 		terminateAction (state, eventHappened);
 	}
 

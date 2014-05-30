@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour {
 	public GameObject flagPrefabs;
 
 	// for Reinforcement Learning
-	constantRL.Actions nextAction;
+	constantRL.Actions nextAction = constantRL.Actions.GET_FLAG_AND_SCORE;
 	private constantRL.Events eventLast;
 
 	// Game info
@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour {
 		} else {
 			
 		}
+
 	}
 
 	void Update () {
@@ -67,7 +68,9 @@ public class PlayerController : MonoBehaviour {
 
 	public void updateEvent(constantRL.Events eventHappened){
 		//eventLast = eventHappened;
-		nextAction = (constantRL.Actions)playerRL.nextAction((int)eventHappened, (int)controllerRL.state);
+		nextAction = (constantRL.Actions)playerRL.nextAction(
+						(int)eventHappened, (int)controllerRL.state);
+		Debug.Log ("event: " + eventHappened + " action: " + nextAction);
 	}
 
 	public void killPlayer(){

@@ -11,20 +11,12 @@ public class GameControllerRL : MonoBehaviour {
 	private GameObject[] team1;
 	private GameObject[] team2;
 
+	private constantRL.States oldState = constantRL.States.flag1Ground_flag2Ground;
+
 	// Use this for initialization
 	void Start () {
 		team1 = GameObject.FindGameObjectsWithTag ("team1");
 		team2 = GameObject.FindGameObjectsWithTag ("team2");
-
-		int newStateFlag1 = (int)flagState.ground;
-		int newStateFlag2 = (int)flagState.carried;
-		state = (constantRL.States)(newStateFlag1 * constantRL.num_states + newStateFlag2);
-		Debug.Log ("state1: "+state+" == "+constantRL.States.flag1Ground_flag2Carried);
-
-		newStateFlag1 = (int)flagState.carried;
-		newStateFlag2 = (int) flagState.carried;
-		state = (constantRL.States)(newStateFlag1 * constantRL.num_states + newStateFlag2);
-		Debug.Log ("state2: "+state+" == "+constantRL.States.flag1Carried_flag2Carried);
 
 	}
 	
@@ -33,7 +25,11 @@ public class GameControllerRL : MonoBehaviour {
 		int newStateFlag1 = (int)checkFlag ("flagTeam1");
 		int newStateFlag2 = (int)checkFlag ("flagTeam2");
 
-		state = (constantRL.States)(newStateFlag1 * constantRL.num_states + newStateFlag2);
+		state = (constantRL.States)(newStateFlag1 * 2 + newStateFlag2);
+		if(state != oldState) {
+			//Debug.Log ("state: "+state);
+			oldState = state;
+		}
 	}
 
 	private flagState checkFlag(string flagTag){

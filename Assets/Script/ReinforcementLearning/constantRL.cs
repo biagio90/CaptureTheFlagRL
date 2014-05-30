@@ -66,17 +66,17 @@ public class constantRL {
 
 	// Reinforcement Learning Matrix
 	// dim [state, event]
-	static public int[,] selectNextState = new int[4, 4]{
-		{0, 0, 0, 0},
-		{0, 0, 0, 0},
-		{0, 0, 0, 0},
-		{0, 0, 0, 0}
-	};
+//	static public int[,] selectNextState = new int[4, 4]{
+//		{0, 0, 0, 0},
+//		{0, 0, 0, 0},
+//		{0, 0, 0, 0},
+//		{0, 0, 0, 0}
+//	};
 
 	// dim [action, event]
 	static public int[,] rewards = new int[2, 4]{
-		{0, 0, 0, 0},
-		{0, 0, 0, 0}
+		{100, -80, 20, -100},
+		{0, -100, 80, -20}
 	};
 //
 //	static public float[,] Q = new float[8, 8]{

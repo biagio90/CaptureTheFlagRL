@@ -7,12 +7,12 @@ using System.Collections;
 public class PlayerAction : MonoBehaviour {
 
 	// PlayerController
-	public bool finish = false;
+	public bool finish = true;
 
 	private bool enable = false;
 	private constantRL.Actions action = constantRL.Actions.GET_FLAG_AND_SCORE;
 
-	private GameController controller;
+	public GameController controller;
 	private PlayerController player;
 	private MovePlayer mover;
 
@@ -25,6 +25,9 @@ public class PlayerAction : MonoBehaviour {
 
 	private int movingState = 0;
 	private Vector3 basePosition;
+
+	public GameObject flagPrefabs;
+	private Vector3 flagPos;
 
 	// ATTACK_ENEMY_BASE
 	public string enemyTag = "team2";
@@ -44,9 +47,17 @@ public class PlayerAction : MonoBehaviour {
 		myBasePos = myBase.transform.position;
 		enemyBasePos = enemyBase.transform.position;
 
+		flagPos = GameObject.FindGameObjectWithTag (myFlagTag).transform.position;
 		mover = GetComponent<MovePlayer> ();
 		player = GetComponent<PlayerController> ();
 		basePosition = myBase.transform.position;
+	}
+	
+	public void startAction(constantRL.Actions action) {
+		this.action = action;
+		movingState = 0;
+		finish = false;
+		enable = true;
 	}
 	
 	void Update () {
@@ -60,6 +71,40 @@ public class PlayerAction : MonoBehaviour {
 				break;
 
 			}
+		}
+	}
+
+	
+	private void controllerGetFlag(){
+		switch (movingState) {
+		case 0: // go to the flag
+			if (!player.hasFlag){
+				movingState = 1;
+				Vector3 flagPosition = GameObject.FindGameObjectWithTag(myFlagTag).transform.position;
+				mover.moveTo(flagPosition);
+			}
+			break;
+		case 1: // you have the flag, go to the base
+			if(player.hasFlag){
+				movingState = 2;
+				mover.moveTo(basePosition);
+			}
+			break;
+		case 2: // reach the base, make score, leave the flag, end action
+			if(Vector3.Distance(transform.position, myBasePos) < 1){
+				controller.increaseScore(tag);
+				gameObject.transform.Find("flag").gameObject.SetActive(false);
+				player.hasFlag=false;
+				
+				Instantiate(flagPrefabs, flagPos, Quaternion.identity);
+
+				movingState = 0;
+				finish = true;
+				enable = false;
+				
+				player.updateEvent (constantRL.Events.makeScore);
+			}
+			break;
 		}
 	}
 
@@ -118,47 +163,15 @@ public class PlayerAction : MonoBehaviour {
 
 	public void enemyKilled(){
 		finish = true;
+		enable = false;
 		player.updateEvent (constantRL.Events.enemyKilled);
 	}
 
 	public void getKilled(){
 		mover.reset ();
 		finish = true;
+		enable = false;
 		player.updateEvent (constantRL.Events.killed);
-	}
-
-	private void controllerGetFlag(){
-		switch (movingState) {
-		case 0: if (!player.hasFlag){
-				movingState = 1;
-				Vector3 flagPosition = GameObject.FindGameObjectWithTag(myFlagTag).transform.position;
-				mover.moveTo(flagPosition);
-			}
-			break;
-		case 1: if(player.hasFlag){
-				movingState = 2;
-				mover.moveTo(basePosition);
-			}
-			break;
-		case 2: if(Vector3.Distance(transform.position, myBasePos) < 1){
-				controller.increaseScore(tag);
-				gameObject.transform.Find("flag").gameObject.SetActive(false);
-				player.hasFlag=false;
-
-				movingState = 0;
-				finish = true;
-				enable = false;
-
-				player.updateEvent (constantRL.Events.makeScore);
-			}
-			break;
-		}
-	}
-
-	public void startAction(constantRL.Actions action) {
-		this.action = action;
-		movingState = 0;
-		enable = true;
 	}
 
 	/*
