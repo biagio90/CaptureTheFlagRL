@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\AstarTest\AstarAI.cs">
+    <Files>
+      <File FileName="Assets\Script\AstarTest\AstarAI.cs" Line="5" Column="35" />
+      <File FileName="Assets\Script\AstarTest\AstarAIlist.cs" Line="77" Column="7" />
+      <File FileName="Assets\Script\AstarTest\AstarAIrandom.cs" Line="67" Column="7" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
