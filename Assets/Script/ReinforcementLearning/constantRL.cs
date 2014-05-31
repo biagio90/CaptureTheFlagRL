@@ -55,7 +55,7 @@ public class constantRL {
 
 	// dim [action, event]
 	static public int[,] rewards = new int[3, 7]{
-		{100, -80, 20, -100, -20, 0, 0},
+		{200, -50, 0, -40, -20, 0, 0},
 		{0, -100, 80, -20, 0, 20, 100},
 		{0, -100, 50, -20, 0, 100, 150}
 	};
@@ -95,3 +95,14 @@ public class constantRL {
 //		{0, 0, 0, 0, 0, 0, 0, 0}	
 //	};
 }
+
+
+
+
+/* OLD REWARDS
+static public int[,] rewards = new int[3, 7]{
+		{200, -50, 0, -40, -20, 0, 0},
+		{0, -100, 80, -20, 0, 20, 100},
+		{0, -100, 50, -20, 0, 100, 150}
+	};
+*/

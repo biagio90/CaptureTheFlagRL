@@ -95,7 +95,7 @@ public class PlayerAction : MonoBehaviour {
 		if(mover.arrived){
 			GameObject enemyFlag = GameObject.FindGameObjectWithTag (enemyFlagTag);
 			if(enemyFlag != null) {
-				if(closeTheCenter(enemyFlag.transform.position)){
+				if(!closeTheCenter(enemyFlag.transform.position)){
 					mover.moveTo(enemyFlag.transform.position);
 					return;
 				}
