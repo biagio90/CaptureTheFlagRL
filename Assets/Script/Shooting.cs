@@ -7,16 +7,13 @@ public class Shooting : MonoBehaviour {
 	public float viewLength = 15.0f;
 	public float viewAngle  = 50.0f;
 	public int killProbability = 100;
+	public float bulletSpeed = 40.0f;
+
 	public GameObject bullet;
 	
 	public float delay = 0.8f;
 	
 	private float nextTime = 0.0f;
-
-	// Use this for initialization
-	void Start () {
-	
-	}
 
 	void Update() {
 		if (Time.time > nextTime) {
@@ -46,7 +43,7 @@ public class Shooting : MonoBehaviour {
 		GameObject shoot = (GameObject) Instantiate(bullet, t, Quaternion.identity);
 		Bullet script = shoot.GetComponent<Bullet> ();
 		script.destination = enemyPos;
-		script.speed = 20;
+		script.speed = bulletSpeed;
 		script.enemyTag = enemyTag;
 		script.killProbability = killProbability;
 		script.playerShooter = gameObject;

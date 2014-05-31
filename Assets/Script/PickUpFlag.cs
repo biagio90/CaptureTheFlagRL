@@ -13,7 +13,7 @@ public class PickUpFlag : MonoBehaviour {
 			PlayerController player = other.GetComponent<PlayerController>();
 			player.catchTheFLag();
 		} else if (other.tag != "bullet"){
-			other.transform.position = flagPos;
+			transform.position = flagPos;
 		}
 	}
 }

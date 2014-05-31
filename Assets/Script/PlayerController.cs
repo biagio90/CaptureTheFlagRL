@@ -2,9 +2,10 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
+	public int id = 0;
 
 	// Player state
-	public bool hasFlag;
+	public bool hasFlag = false;
 	public GameObject playerExplosion;
 	public GameObject flagPrefabs;
 
@@ -68,9 +69,13 @@ public class PlayerController : MonoBehaviour {
 
 	public void updateEvent(constantRL.Events eventHappened){
 		//eventLast = eventHappened;
-		nextAction = (constantRL.Actions)playerRL.nextAction(
-						(int)eventHappened, (int)controllerRL.state);
-		Debug.Log ("event: " + eventHappened + " action: " + nextAction);
+		if(tag=="team1"){
+
+			Debug.Log ("state: "+ (int)controllerRL.state+"  REWARD: "+constantRL.rewards [(int)nextAction, (int)eventHappened]);
+			nextAction = (constantRL.Actions)playerRL.nextAction(
+							(int)eventHappened, (int)controllerRL.state);
+			Debug.Log ( "nextAction: " + nextAction + "  event: " + eventHappened);
+		}
 	}
 
 	public void killPlayer(){
@@ -86,12 +91,13 @@ public class PlayerController : MonoBehaviour {
 
 		dead = true;
 
-		action.getKilled ();
+		if(action!=null) action.getKilled ();
+
 	}
 
 	public void catchTheFLag(){
 		gameObject.transform.Find("flag").gameObject.SetActive(true);
 		hasFlag = true;
 	}
-
+	
 }

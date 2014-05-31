@@ -30,9 +30,14 @@ public class GameController : MonoBehaviour {
 		GameObject team2 = GameObject.FindGameObjectWithTag ("team2");
 		
 		for (int i=0; i<numPlayers-1; i++) {
-			if(team1!=null) Instantiate(team1, team1.transform.position, team1.transform.rotation);
-			if(team2!=null) Instantiate(team2, team2.transform.position, team2.transform.rotation);
-			
+			if(team1!=null) {
+				GameObject clone = (GameObject)Instantiate(team1, team1.transform.position, team1.transform.rotation);
+				clone.GetComponent<MovePlayer>().id = i+1;
+			}
+			if(team2!=null) {
+				GameObject clone = (GameObject)Instantiate(team2, team2.transform.position, team2.transform.rotation);
+				clone.GetComponent<DummyController>().id = i+1;
+			}
 		}
 		
 		started = true;

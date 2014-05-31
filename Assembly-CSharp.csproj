@@ -51,6 +51,7 @@
      <Compile Include="Assets\Script\AstarTest\AstarAIrandom.cs" />
      <Compile Include="Assets\Script\AstarTest\generateCube.cs" />
      <Compile Include="Assets\Script\Bullet.cs" />
+     <Compile Include="Assets\Script\DummyController.cs" />
      <Compile Include="Assets\Script\GameController.cs" />
      <Compile Include="Assets\Script\GameControllerRL.cs" />
      <Compile Include="Assets\Script\MovePlayer.cs" />

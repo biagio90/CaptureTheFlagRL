@@ -5,7 +5,7 @@ public class constantRL {
 
 	public const float alpha = 0.1f;
 	public const float gamma = 0.9995f;
-	static public int epsilon = 50;
+	static public int epsilon = 0; // probability to get a random action
 
 	// STATES
 	public enum States
@@ -31,8 +31,8 @@ public class constantRL {
 	{
 		makeScore,
 		enemyMakeScore,
-		killed,
-		enemyKilled
+		enemyKilled,
+		killed
 	};
 
 	public const int num_events = 4;

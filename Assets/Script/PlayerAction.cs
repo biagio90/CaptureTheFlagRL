@@ -36,10 +36,14 @@ public class PlayerAction : MonoBehaviour {
 	public float viewAngle  = 50.0f;
 	public int killProbability = 100;
 	public GameObject bullet;
-	
-	public float delay = 0.8f;
-	
-	private float nextTime = 0.0f;
+	public float bulletSpeed = 40.0f;
+
+	// TIMER
+	public float delayNewAttack = 2.0f;
+	private float nextNewAttack = 0.0f;
+
+	public float delayShoot = 0.8f;
+	private float nextShootTime = 0.0f;
 
 	// TAKE_CARE_ENEMY_FLAG
 
@@ -71,6 +75,7 @@ public class PlayerAction : MonoBehaviour {
 				break;
 
 			}
+
 		}
 	}
 
@@ -85,27 +90,37 @@ public class PlayerAction : MonoBehaviour {
 			}
 			break;
 		case 1: // you have the flag, go to the base
-			if(player.hasFlag){
-				movingState = 2;
-				mover.moveTo(basePosition);
+			if(mover.arrived){
+				if(player.hasFlag){
+					movingState = 2;
+					mover.moveTo(basePosition);
+				} else {
+					resetAction();
+					player.updateEvent (constantRL.Events.killed);
+				}
 			}
 			break;
 		case 2: // reach the base, make score, leave the flag, end action
-			if(Vector3.Distance(transform.position, myBasePos) < 1){
+			if(Vector3.Distance(transform.position, myBasePos) < 1
+			   && player.hasFlag){
 				controller.increaseScore(tag);
 				gameObject.transform.Find("flag").gameObject.SetActive(false);
 				player.hasFlag=false;
 				
 				Instantiate(flagPrefabs, flagPos, Quaternion.identity);
 
-				movingState = 0;
-				finish = true;
-				enable = false;
-				
+				resetAction();
 				player.updateEvent (constantRL.Events.makeScore);
 			}
 			break;
 		}
+	}
+
+	private void resetAction(){
+		movingState = 0;
+		finish = true;
+		enable = false;
+
 	}
 
 	private void controllerAttack(){
@@ -117,17 +132,25 @@ public class PlayerAction : MonoBehaviour {
 		if(movingState == 0){
 			movingState=1;
 			Vector3 point = getRandomPosition();
-			point = (point - enemyBasePos).normalized * Random.Range(5.0f, 10.0f);
+			point = (point - enemyBasePos).normalized * Random.Range(3.0f, 13.0f);
 			mover.moveTo(enemyBasePos+point);
 		}
 		if(movingState==1 && mover.arrived){
 			mover.rotateTo(enemyBasePos);
+			nextNewAttack = Time.time + delayNewAttack;
+			movingState = 2;
+		}
+		else if (movingState == 2) {
+			if (Time.time > nextNewAttack) {
+				movingState = 0;
+				mover.reset();
+			}
 		}
 	}
 	
 	private void checkForShoot(){
-		if (Time.time > nextTime) {
-			nextTime = Time.time + delay;
+		if (Time.time > nextShootTime) {
+			nextShootTime = Time.time + delayShoot;
 			
 			Vector3 direction = transform.TransformDirection(Vector3.forward);
 			RaycastHit hit = new RaycastHit ();
@@ -153,7 +176,7 @@ public class PlayerAction : MonoBehaviour {
 		GameObject shoot = (GameObject) Instantiate(bullet, t, Quaternion.identity);
 		Bullet script = shoot.GetComponent<Bullet> ();
 		script.destination = enemyPos;
-		script.speed = 20;
+		script.speed = bulletSpeed;
 		script.enemyTag = enemyTag;
 		script.killProbability = killProbability;
 		script.playerShooter = gameObject;
@@ -162,15 +185,12 @@ public class PlayerAction : MonoBehaviour {
 	}
 
 	public void enemyKilled(){
-		finish = true;
-		enable = false;
+		resetAction();
 		player.updateEvent (constantRL.Events.enemyKilled);
 	}
 
 	public void getKilled(){
-		mover.reset ();
-		finish = true;
-		enable = false;
+		resetAction();
 		player.updateEvent (constantRL.Events.killed);
 	}
 

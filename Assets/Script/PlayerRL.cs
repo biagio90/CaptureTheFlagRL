@@ -8,7 +8,7 @@ public class PlayerRL {
 
 	// Qtable needs to chose the next action
 	// dim [state, action]
-	private float[,] Qtable;
+	public float[,] Qtable;
 
 	public PlayerRL(){
 		Qtable = new float[constantRL.num_states, constantRL.num_actions];
@@ -19,7 +19,7 @@ public class PlayerRL {
 		//int newState = constantRL.selectNextState [state, eventHappened];
 
 		int r = calculateReward (action, eventHappened);
-		updateQ (action, state, newState, eventHappened, r);
+		updateQ (action, state, newState, r);
 		
 		int prob = Random.Range (0, 100);
 		if (prob < constantRL.epsilon) {
@@ -36,7 +36,7 @@ public class PlayerRL {
 		return constantRL.rewards [a, e];
 	}
 
-	private void updateQ(int a, int p, int s, int e, int r) {
+	private void updateQ(int a, int p, int s, int r) {
 		float delta = r + constantRL.gamma * getMaxAction (s) - Qtable [p, a];
 		Qtable [p, a] = Qtable [p, a] + constantRL.alpha * delta;
 	}
@@ -52,7 +52,7 @@ public class PlayerRL {
 	}
 	
 	private int getArgmaxAction (int s) {
-		float max = 0;
+		float max = int.MinValue;
 		int index = 0;
 		for (int i=0; i<constantRL.num_actions; i++) {
 			if(Qtable[s, i] > max) {
