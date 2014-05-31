@@ -93,6 +93,7 @@ public class PlayerAction : MonoBehaviour {
 		checkForShoot ();
 
 		if(mover.arrived){
+			transform.Find("WheelBall").gameObject.SetActive(true);
 			GameObject enemyFlag = GameObject.FindGameObjectWithTag (enemyFlagTag);
 			if(enemyFlag != null) {
 				if(!closeTheCenter(enemyFlag.transform.position)){
@@ -111,6 +112,7 @@ public class PlayerAction : MonoBehaviour {
 	public void enemyFlagTouched(){
 		resetAction();
 		player.updateEvent (constantRL.Events.enemyFlagCatched);
+		transform.Find("WheelBall").gameObject.SetActive(false);
 	}
 	private bool closeTheCenter(Vector3 pos){
 		pos.y = 0;
@@ -122,6 +124,7 @@ public class PlayerAction : MonoBehaviour {
 		switch (movingState) {
 		case 0: // go to the flag
 			if (!player.hasFlag){
+				transform.Find("EyeBall").gameObject.SetActive(true);
 				movingState = 1;
 				GameObject flag = GameObject.FindGameObjectWithTag(myFlagTag);
 				if(flag!=null) mover.moveTo(flag.transform.position);
@@ -134,6 +137,7 @@ public class PlayerAction : MonoBehaviour {
 					mover.moveTo(basePosition);
 				} else {
 					resetAction();
+					transform.Find("EyeBall").gameObject.SetActive(false);
 					player.updateEvent (constantRL.Events.teammateCatchFlag);
 				}
 			}
@@ -149,6 +153,7 @@ public class PlayerAction : MonoBehaviour {
 
 				resetAction();
 				player.updateEvent (constantRL.Events.makeScore);
+				transform.Find("EyeBall").gameObject.SetActive(false);
 			}
 			break;
 		}
@@ -164,7 +169,7 @@ public class PlayerAction : MonoBehaviour {
 		if(movingState == 0){
 			movingState=1;
 			Vector3 point = getRandomPosition();
-			point = (point - enemyBasePos).normalized * Random.Range(3.0f, 13.0f);
+			point = (point - enemyBasePos).normalized * Random.Range(3.0f, 20.0f);
 			mover.moveTo(enemyBasePos+point);
 		}
 		if(movingState==1 && mover.arrived){
@@ -221,6 +226,7 @@ public class PlayerAction : MonoBehaviour {
 		resetAction();
 		if(!hasFlag)	player.updateEvent (constantRL.Events.enemyKilled);
 		else 			player.updateEvent (constantRL.Events.enemyCatcherKilled);
+		transform.Find("WheelBall").gameObject.SetActive(false);
 	}
 
 	public void getKilled(){

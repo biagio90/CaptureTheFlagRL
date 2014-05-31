@@ -91,6 +91,8 @@ public class PlayerController : MonoBehaviour {
 
 	public void killPlayer(){
 		Instantiate(playerExplosion, transform.position, transform.rotation);
+		transform.Find("EyeBall").gameObject.SetActive(false);
+		transform.Find("WheelBall").gameObject.SetActive(false);
 
 		if (hasFlag) {
 			Instantiate(flagPrefabs, transform.position, Quaternion.identity);
