@@ -38,6 +38,9 @@ public class PlayerAction : MonoBehaviour {
 	public GameObject bullet;
 	public float bulletSpeed = 40.0f;
 
+	// TAKE_CARE_ENEMY_FLAG
+	public string enemyFlagTag;
+
 	// TIMER
 	public float delayNewAttack = 2.0f;
 	private float nextNewAttack = 0.0f;
@@ -45,7 +48,6 @@ public class PlayerAction : MonoBehaviour {
 	public float delayShoot = 0.8f;
 	private float nextShootTime = 0.0f;
 
-	// TAKE_CARE_ENEMY_FLAG
 
 	void Start () {
 		myBasePos = myBase.transform.position;
@@ -63,7 +65,14 @@ public class PlayerAction : MonoBehaviour {
 		finish = false;
 		enable = true;
 	}
-	
+
+	private void resetAction(){
+		movingState = 0;
+		finish = true;
+		enable = false;
+		
+	}
+
 	void Update () {
 		if (enable) {
 			switch(action) {
@@ -71,7 +80,7 @@ public class PlayerAction : MonoBehaviour {
 				break;
 			case constantRL.Actions.ATTACK_ENEMY_BASE:	 controllerAttack();
 				break;
-			case constantRL.Actions.TAKE_CARE_ENEMY_FLAG:
+			case constantRL.Actions.TAKE_CARE_ENEMY_FLAG: controllerTakeEnemyFlag();
 				break;
 
 			}
@@ -79,14 +88,43 @@ public class PlayerAction : MonoBehaviour {
 		}
 	}
 
-	
+	// TAKE_CARE_ENEMY_FLAG
+	private void controllerTakeEnemyFlag(){
+		checkForShoot ();
+
+		if(mover.arrived){
+			GameObject enemyFlag = GameObject.FindGameObjectWithTag (enemyFlagTag);
+			if(enemyFlag != null) {
+				if(closeTheCenter(enemyFlag.transform.position)){
+					mover.moveTo(enemyFlag.transform.position);
+					return;
+				}
+				mover.moveTo(getRandomPosition());
+			} else {
+				//string enemyTag = (tag=="team1") ? "team2" : "team1";
+				GameObject enemy = controller.getFlagCatcher(enemyTag);
+
+				if(enemy!=null) mover.moveTo(enemy.transform.position);
+			}
+		}
+	}
+	public void enemyFlagTouched(){
+		resetAction();
+		player.updateEvent (constantRL.Events.enemyFlagCatched);
+	}
+	private bool closeTheCenter(Vector3 pos){
+		pos.y = 0;
+		return Vector3.Distance (pos, Vector3.zero) < 5;
+	}
+
+	// GET_FLAG_AND_SCORE
 	private void controllerGetFlag(){
 		switch (movingState) {
 		case 0: // go to the flag
 			if (!player.hasFlag){
 				movingState = 1;
-				Vector3 flagPosition = GameObject.FindGameObjectWithTag(myFlagTag).transform.position;
-				mover.moveTo(flagPosition);
+				GameObject flag = GameObject.FindGameObjectWithTag(myFlagTag);
+				if(flag!=null) mover.moveTo(flag.transform.position);
 			}
 			break;
 		case 1: // you have the flag, go to the base
@@ -96,7 +134,7 @@ public class PlayerAction : MonoBehaviour {
 					mover.moveTo(basePosition);
 				} else {
 					resetAction();
-					player.updateEvent (constantRL.Events.killed);
+					player.updateEvent (constantRL.Events.teammateCatchFlag);
 				}
 			}
 			break;
@@ -115,14 +153,8 @@ public class PlayerAction : MonoBehaviour {
 			break;
 		}
 	}
-
-	private void resetAction(){
-		movingState = 0;
-		finish = true;
-		enable = false;
-
-	}
-
+	
+	// ATTACK_ENEMY_BASE
 	private void controllerAttack(){
 		checkForShoot ();
 		moveToAttack ();
@@ -180,13 +212,15 @@ public class PlayerAction : MonoBehaviour {
 		script.enemyTag = enemyTag;
 		script.killProbability = killProbability;
 		script.playerShooter = gameObject;
+		script.action = GetComponent<PlayerAction>();
 		script.go = true;
 		
 	}
 
-	public void enemyKilled(){
+	public void enemyKilled(bool hasFlag){
 		resetAction();
-		player.updateEvent (constantRL.Events.enemyKilled);
+		if(!hasFlag)	player.updateEvent (constantRL.Events.enemyKilled);
+		else 			player.updateEvent (constantRL.Events.enemyCatcherKilled);
 	}
 
 	public void getKilled(){

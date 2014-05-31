@@ -3,8 +3,6 @@ using System.Collections;
 using Pathfinding;
 
 public class MovePlayer : MonoBehaviour {
-	public int id = 0;
-
 	public bool arrived = true;
 
 	private Vector3 target;
@@ -69,7 +67,7 @@ public class MovePlayer : MonoBehaviour {
 		Quaternion _lookRotation = Quaternion.LookRotation (direction);
 		transform.rotation = Quaternion.Slerp(transform.rotation, _lookRotation, turnSpeed * Time.deltaTime);
 		
-		rigidbody.velocity = direction * (speed-id);
+		rigidbody.velocity = direction * speed;
 	}
 
 	public void rotateTo(Vector3 destination) {

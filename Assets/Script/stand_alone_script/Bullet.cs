@@ -11,7 +11,7 @@ public class Bullet : MonoBehaviour {
 	public Vector3 destination;
 	public bool go = false;
 
-	private PlayerAction action;
+	public PlayerAction action;
 
 	void FixedUpdate () {
 		if (go) {
@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour {
 			Vector3 direction = (destination - transform.position).normalized;
 			rigidbody.velocity = direction * speed;
 
-			action = playerShooter.GetComponent<PlayerAction>();
+			//action = playerShooter.GetComponent<PlayerAction>();
 		}
 	}
 
@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour {
 				PlayerController pc = other.gameObject.GetComponent<PlayerController>();
 				if (pc != null) {
 					pc.killPlayer();
-					if(action!=null) action.enemyKilled();
+					if(action!=null) action.enemyKilled(pc.hasFlag);
 				}
 			}
 		}

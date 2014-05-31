@@ -32,10 +32,13 @@ public class constantRL {
 		makeScore,
 		enemyMakeScore,
 		enemyKilled,
-		killed
+		killed,
+		teammateCatchFlag,
+		enemyFlagCatched,
+		enemyCatcherKilled
 	};
 
-	public const int num_events = 4;
+	public const int num_events = 7;
 
 	public const int tookEnemysFlag 				= 0;
 	public const int tookFlag 						= 1;
@@ -50,6 +53,13 @@ public class constantRL {
 	//public const int enemysTooksEnemysFlag 		= 4;
 	//public const int enemysTooksOurFlag 			= 5;
 
+	// dim [action, event]
+	static public int[,] rewards = new int[3, 7]{
+		{100, -80, 20, -100, -20, 0, 0},
+		{0, -100, 80, -20, 0, 20, 100},
+		{0, -100, 50, -20, 0, 100, 150}
+	};
+
 //	// ACTIONS
 	public enum Actions
 		{
@@ -58,7 +68,7 @@ public class constantRL {
 		TAKE_CARE_ENEMY_FLAG
 	};
 
-	public const int num_actions = 2;
+	public const int num_actions = 3;
 
 	public const int GET_FLAG_AND_SCORE			= 0;
 	public const int ATTACK_ENEMY_BASE	 		= 1;
@@ -72,12 +82,7 @@ public class constantRL {
 //		{0, 0, 0, 0},
 //		{0, 0, 0, 0}
 //	};
-
-	// dim [action, event]
-	static public int[,] rewards = new int[2, 4]{
-		{100, -80, 20, -100},
-		{0, -100, 80, -20}
-	};
+	
 //
 //	static public float[,] Q = new float[8, 8]{
 //		{0, 0, 0, 0, 0, 0, 0, 0},

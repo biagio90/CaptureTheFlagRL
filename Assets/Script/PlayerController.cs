@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
-	public int id = 0;
+	public int id;
 
 	// Player state
 	public bool hasFlag = false;
@@ -31,6 +31,10 @@ public class PlayerController : MonoBehaviour {
 	public bool dead = false;
 	private float timer = 0.0f;
 
+	// initial delay
+	private float delayBegin;
+	private float timerBegin = 0.0f;
+
 	// Use this for initialization
 	void Start () {
 		controller = gameController.GetComponent<GameController>();
@@ -48,10 +52,17 @@ public class PlayerController : MonoBehaviour {
 			
 		}
 
+		delayBegin = id;
 	}
 
 	void Update () {
-		if(tag=="team1"){
+		if(start){
+			timerBegin = Time.time + delayBegin;
+			start = false;
+			return;
+		}
+
+		if(tag=="team1" && Time.time > timerBegin){
 			if(!dead){
 				if(action.finish){
 					//constantRL.Actions nextAction = (constantRL.Actions)playerRL.nextAction((int)eventLast);

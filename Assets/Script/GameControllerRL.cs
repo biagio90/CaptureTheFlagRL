@@ -15,11 +15,16 @@ public class GameControllerRL : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+//		team1 = GameObject.FindGameObjectsWithTag ("team1");
+//		team2 = GameObject.FindGameObjectsWithTag ("team2");
+
+	}
+	public void startMatch(){
 		team1 = GameObject.FindGameObjectsWithTag ("team1");
 		team2 = GameObject.FindGameObjectsWithTag ("team2");
 
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		int newStateFlag1 = (int)checkFlag ("flagTeam1");
@@ -63,5 +68,24 @@ public class GameControllerRL : MonoBehaviour {
 			}
 		}
 		//CONTINUE ??
+	}
+
+	public GameObject getCatcherTeam1(){
+		foreach(GameObject player in team1){
+			PlayerController controller = player.GetComponent<PlayerController>();
+			if(controller.hasFlag){
+				return player;
+			}
+		}
+		return null;
+	}
+	public GameObject getCatcherTeam2(){
+		foreach(GameObject player in team2){
+			PlayerController controller = player.GetComponent<PlayerController>();
+			if(controller.hasFlag){
+				return player;
+			}
+		}
+		return null;
 	}
 }

@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour {
 		for (int i=0; i<numPlayers-1; i++) {
 			if(team1!=null) {
 				GameObject clone = (GameObject)Instantiate(team1, team1.transform.position, team1.transform.rotation);
-				clone.GetComponent<MovePlayer>().id = i+1;
+				clone.GetComponent<PlayerController>().id = i+1;
 			}
 			if(team2!=null) {
 				GameObject clone = (GameObject)Instantiate(team2, team2.transform.position, team2.transform.rotation);
@@ -42,6 +42,7 @@ public class GameController : MonoBehaviour {
 		
 		started = true;
 		controllerRL = GetComponent<GameControllerRL> ();
+		controllerRL.startMatch ();
 	}
 	
 	// Use this for initialization
@@ -125,7 +126,13 @@ public class GameController : MonoBehaviour {
 		}
 	}
 
-	
+	public GameObject getFlagCatcher (string team){
+		if(team == "team1"){
+			return controllerRL.getCatcherTeam1();
+		} 
+		return controllerRL.getCatcherTeam2();
+	}
+
 	public void increaseScore(string team) {
 		if(team == "team1") {
 			scoreTeam1++;

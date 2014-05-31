@@ -13,7 +13,11 @@ public class PickUpFlag : MonoBehaviour {
 			PlayerController player = other.GetComponent<PlayerController>();
 			player.catchTheFLag();
 		} else if (other.tag != "bullet"){
-			transform.position = flagPos;
+			if(Vector3.Distance(transform.position, flagPos) > 2) {
+				transform.position = flagPos;
+				PlayerAction player = other.GetComponent<PlayerAction>();
+				if(player != null) player.enemyFlagTouched();
+			}
 		}
 	}
 }

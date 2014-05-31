@@ -47,6 +47,7 @@ public class Shooting : MonoBehaviour {
 		script.enemyTag = enemyTag;
 		script.killProbability = killProbability;
 		script.playerShooter = gameObject;
+		script.action = GetComponent<PlayerAction>();
 		script.go = true;
 
 	}
