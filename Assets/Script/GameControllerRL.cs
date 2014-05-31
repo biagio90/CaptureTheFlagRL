@@ -6,12 +6,12 @@ public class GameControllerRL : MonoBehaviour {
 
 	private enum flagState {ground, carried, center};
 
-	private flagState stateFlag1, stateFlag2;
+//	private flagState stateFlag1, stateFlag2;
 	
 	private GameObject[] team1;
 	private GameObject[] team2;
 
-	private constantRL.States oldState = constantRL.States.flag1Ground_flag2Ground;
+	public constantRL.States oldState = constantRL.States.flag1Ground_flag2Ground;
 
 	// Use this for initialization
 	void Start () {
@@ -32,7 +32,7 @@ public class GameControllerRL : MonoBehaviour {
 
 		state = (constantRL.States)(newStateFlag1 * 2 + newStateFlag2);
 		if(state != oldState) {
-			//Debug.Log ("state: "+state);
+			Debug.Log ("state: "+state);
 			oldState = state;
 		}
 	}
@@ -43,6 +43,7 @@ public class GameControllerRL : MonoBehaviour {
 			return flagState.carried;
 		}
 		Vector3 flagPos = flag.transform.position;
+		//Debug.Log (flagPos);
 		flagPos.y = 0;
 //		if(Vector3.Distance(flagPos, Vector3.zero) < 5){
 //			return flagState.center;

@@ -18,7 +18,8 @@ public class MovePlayer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+//		AstarPath astar = new AstarPath ();
+//		astar.logPathResults = PathLog.None;
 	}
 
 	public void moveTo(Vector3 destination){

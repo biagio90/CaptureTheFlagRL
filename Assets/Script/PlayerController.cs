@@ -35,8 +35,13 @@ public class PlayerController : MonoBehaviour {
 	private float delayBegin;
 	private float timerBegin = 0.0f;
 
+	// write file log
+	private string nameFile;
+
 	// Use this for initialization
 	void Start () {
+		nameFile = composeName();
+
 		controller = gameController.GetComponent<GameController>();
 		controllerRL = gameController.GetComponent<GameControllerRL>();
 
@@ -81,14 +86,16 @@ public class PlayerController : MonoBehaviour {
 	public void updateEvent(constantRL.Events eventHappened){
 		//eventLast = eventHappened;
 		if(tag=="team1"){
-
-			Debug.Log ("state: "+ (int)controllerRL.state+"  REWARD: "+constantRL.rewards [(int)nextAction, (int)eventHappened]);
+			constantRL.Actions lastAction = nextAction;
+			//Debug.Log ("state: "+ (int)controllerRL.state+"  REWARD: "+constantRL.rewards [(int)nextAction, (int)eventHappened]);
 			nextAction = (constantRL.Actions)playerRL.nextAction(
 							(int)eventHappened, (int)controllerRL.state);
-			Debug.Log ( "nextAction: " + nextAction + "  event: " + eventHappened);
+			//Debug.Log ( "nextAction: " + nextAction + "  event: " + eventHappened);
+			int r = constantRL.rewards [(int)nextAction, (int)eventHappened];
+			saveOnFile(lastAction, nextAction, eventHappened, controllerRL.oldState, controllerRL.state, r);
 		}
 	}
-
+	
 	public void killPlayer(){
 		Instantiate(playerExplosion, transform.position, transform.rotation);
 		transform.Find("EyeBall").gameObject.SetActive(false);
@@ -112,5 +119,35 @@ public class PlayerController : MonoBehaviour {
 		gameObject.transform.Find("flag").gameObject.SetActive(true);
 		hasFlag = true;
 	}
-	
+
+	private void saveOnFile(constantRL.Actions action, constantRL.Actions nextAction, constantRL.Events eventHappened, constantRL.States state, constantRL.States nextState, int reward){
+		using (System.IO.StreamWriter file = new System.IO.StreamWriter(nameFile, true))
+		{
+			file.WriteLine("State: "+state+" Action: "+action);
+			file.WriteLine("event: "+eventHappened+" reward: "+reward);
+			file.WriteLine("next state: "+nextState+" next action: "+nextAction);
+			file.WriteLine("Q table: ");
+			for (int i=0; i<constantRL.num_states;i++){
+				string line = "";
+				for (int j=0; j<constantRL.num_actions;j++){
+					line += playerRL.Qtable[i, j]+" ";
+				}
+				file.WriteLine(line);
+			}
+			file.WriteLine("\n\n");
+		}
+	}
+
+	private string composeName(){
+		string dir = @"C:\Users\Biagio\Documents\GitHub\CaptureTheFlagRL\LogFile\";
+		string name = "player" + id;
+		int count = 0;
+
+		string path = dir + name + "_" + count+".txt";
+		while(System.IO.File.Exists(path)){
+			count++;
+			path = dir + name + "_" + count+".txt";
+		}
+		return path;
+	}
 }

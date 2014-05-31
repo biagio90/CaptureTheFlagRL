@@ -4,7 +4,7 @@ using System.Collections;
 public class constantRL {
 
 	public const float alpha = 0.1f;
-	public const float gamma = 0.9995f;
+	public const float gamma = 1.0f; //0.9995f;
 	static public int epsilon = 0; // probability to get a random action
 
 	// STATES
@@ -33,9 +33,9 @@ public class constantRL {
 
 	// dim [action, event]
 	static public int[,] rewards = new int[3, 7]{
-		{200, -40, 0, -40, -20, 0, 0},
-		{0, -60, 80, -20, 0, 20, 100},
-		{0, -100, 50, -20, 0, 80, 150}
+		{200, -50, 0, -40, -20, 0, 0},
+		{0, -100, 80, -20, 0, 20, 100},
+		{0, -100, 50, -20, 0, 100, 150}
 	};
 
 //	// ACTIONS
@@ -78,5 +78,12 @@ static public int[,] rewards = new int[3, 7]{
 		{200, -50, 0, -40, -20, 0, 0},
 		{0, -100, 80, -20, 0, 20, 100},
 		{0, -100, 50, -20, 0, 100, 150}
+	};
+
+
+	static public int[,] rewards = new int[3, 7]{
+		{200, -40, 0, -40, -20, 0, 0},
+		{0, -60, 80, -20, 0, 20, 100},
+		{0, -100, 50, -20, 0, 80, 150}
 	};
 */
