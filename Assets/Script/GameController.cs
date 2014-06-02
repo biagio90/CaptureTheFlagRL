@@ -9,8 +9,8 @@ public class GameController : MonoBehaviour {
 	private float width2 = 250, hight2 = 30;
 	private float offset = 40;
 	
-	private int select1 = 0;
-	private int select2 = 0;
+	//private int select1 = 0;
+	//private int select2 = 0;
 	
 	//
 	public int numPlayers;

@@ -1,0 +1,33 @@
+State: flag1Ground_flag2Carried Action: ATTACK_ENEMY_BASE
+event: killed reward: -40
+next state: flag1Ground_flag2Carried next action: GET_FLAG_AND_SCORE
+Q table: 
+-4 0 0 
+0 0 0 
+0 0 0 
+0 0 0 
+
+
+
+State: flag1Ground_flag2Carried Action: GET_FLAG_AND_SCORE
+event: enemyKilled reward: 0
+next state: flag1Ground_flag2Carried next action: GET_FLAG_AND_SCORE
+Q table: 
+-4 0 0 
+0 0 0 
+0 0 0 
+0 0 0 
+
+
+
+State: flag1Ground_flag2Carried Action: GET_FLAG_AND_SCORE
+event: enemyMakeScore reward: -100
+next state: flag1Ground_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 0 0 
+-5 0 0 
+0 0 0 
+0 0 0 
+
+
+

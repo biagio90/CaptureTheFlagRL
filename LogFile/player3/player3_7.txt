@@ -1,0 +1,11 @@
+State: flag1Ground_flag2Carried Action: ATTACK_ENEMY_BASE
+event: enemyMakeScore reward: -50
+next state: flag1Ground_flag2Carried next action: GET_FLAG_AND_SCORE
+Q table: 
+-5 0 0 
+0 0 0 
+0 0 0 
+0 0 0 
+
+
+

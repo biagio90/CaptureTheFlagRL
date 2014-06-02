@@ -12,7 +12,10 @@ public class PlayerAction : MonoBehaviour {
 	private bool enable = false;
 	private constantRL.Actions action = constantRL.Actions.GET_FLAG_AND_SCORE;
 
-	public GameController controller;
+	public GameObject gameController;
+	private GameController controller;
+	private GameControllerRL controllerRL;
+
 	private PlayerController player;
 	private MovePlayer mover;
 
@@ -42,7 +45,7 @@ public class PlayerAction : MonoBehaviour {
 	public string enemyFlagTag;
 
 	// TIMER
-	public float delayNewAttack = 2.0f;
+	public float delayNewAttack = 0.0f;
 	private float nextNewAttack = 0.0f;
 
 	public float delayShoot = 0.8f;
@@ -57,6 +60,10 @@ public class PlayerAction : MonoBehaviour {
 		mover = GetComponent<MovePlayer> ();
 		player = GetComponent<PlayerController> ();
 		basePosition = myBase.transform.position;
+
+		controller = gameController.GetComponent<GameController>();
+		controllerRL = gameController.GetComponent<GameControllerRL>();
+
 	}
 	
 	public void startAction(constantRL.Actions action) {
@@ -74,6 +81,8 @@ public class PlayerAction : MonoBehaviour {
 	}
 
 	void Update () {
+		checkForShoot ();
+
 		if (enable) {
 			switch(action) {
 			case constantRL.Actions.GET_FLAG_AND_SCORE: controllerGetFlag();
@@ -90,8 +99,8 @@ public class PlayerAction : MonoBehaviour {
 
 	// TAKE_CARE_ENEMY_FLAG
 	private void controllerTakeEnemyFlag(){
-		checkForShoot ();
-
+//		checkForShoot ();
+//
 		if(mover.arrived){
 			transform.Find("WheelBall").gameObject.SetActive(true);
 			GameObject enemyFlag = GameObject.FindGameObjectWithTag (enemyFlagTag);
@@ -161,8 +170,16 @@ public class PlayerAction : MonoBehaviour {
 	
 	// ATTACK_ENEMY_BASE
 	private void controllerAttack(){
-		checkForShoot ();
-		moveToAttack ();
+		//checkForShoot ();
+		//moveToAttack ();
+		attackClosest ();
+	}
+
+	private void attackClosest (){
+		if (mover.arrived) {
+			Vector3 target = controllerRL.closestEnemy();
+			mover.moveTo(target);
+		}
 	}
 
 	private void moveToAttack (){
@@ -253,6 +270,10 @@ public class PlayerAction : MonoBehaviour {
 		ret.x = Random.Range(-27, 27);
 		ret.z = Random.Range(-20, 20);
 		return ret;
+	}
+
+	public constantRL.Actions getCurrentAction(){
+		return action;
 	}
 
 }

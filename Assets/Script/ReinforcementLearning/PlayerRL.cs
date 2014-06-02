@@ -15,8 +15,16 @@ public class PlayerRL {
 		// Qtable start empty
 	}
 
+	public PlayerRL(float[,] Q){
+		Qtable = Q;
+	}
+
 	public int nextAction(int eventHappened, int newState){
 		//int newState = constantRL.selectNextState [state, eventHappened];
+
+		if (eventHappened == constantRL.Event_start) {
+			return getArgmaxAction(newState);
+		}
 
 		int r = calculateReward (action, eventHappened);
 		updateQ (action, state, newState, r);

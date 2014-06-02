@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class GameControllerRL : MonoBehaviour {
-	public constantRL.States state;
+	public constantRL.States state;// = constantRL.States.flag1Center_flag2Center;
 
 	private enum flagState {ground, carried, center};
 
@@ -32,7 +32,7 @@ public class GameControllerRL : MonoBehaviour {
 
 		state = (constantRL.States)(newStateFlag1 * 2 + newStateFlag2);
 		if(state != oldState) {
-			Debug.Log ("state: "+state);
+//			Debug.Log ("state: "+state);
 			oldState = state;
 		}
 	}
@@ -42,23 +42,43 @@ public class GameControllerRL : MonoBehaviour {
 		if(flag == null){
 			return flagState.carried;
 		}
-		Vector3 flagPos = flag.transform.position;
+//		Vector3 flagPos = flag.transform.position;
 		//Debug.Log (flagPos);
-		flagPos.y = 0;
-//		if(Vector3.Distance(flagPos, Vector3.zero) < 5){
+//		flagPos.y = 0;
+//		if(Vector3.Distance(flagPos, Vector3.zero) < 10){
 //			return flagState.center;
 //		}
 
 		return flagState.ground;
 	}
-	
+
+	public Vector3 closestEnemy(){
+		Vector3 target = Vector3.zero;
+		float dist = int.MaxValue;
+		Vector3 myPos = transform.position;
+
+		//GameObject[] team = (tag == "team1") ? team2 : team1;
+		foreach (GameObject player in team2) {
+			Vector3 pos = player.transform.position;
+			float d = Vector3.Distance(myPos, pos);
+			if(d < dist){
+				dist = d;
+				target = pos;
+			}
+		}
+
+		return target;
+	}
+
 	public void eventMessageScore(int team){
-		GameObject[] goodTeam, badTeam;
+		//GameObject[] goodTeam;
+		GameObject[] badTeam;
+
 		if(team == 1){
-			goodTeam = team1;
+//			goodTeam = team1;
 			badTeam = team2;
 		} else {
-			goodTeam = team2;
+//			goodTeam = team2;
 			badTeam = team1;
 		}
 

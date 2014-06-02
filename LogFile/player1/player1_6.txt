@@ -1,0 +1,418 @@
+State: flag1Ground_flag2Carried Action: ATTACK_ENEMY_BASE
+event: killed reward: -40
+next state: flag1Ground_flag2Carried next action: GET_FLAG_AND_SCORE
+Q table: 
+-4 0 0 
+0 0 0 
+0 0 0 
+0 0 0 
+
+
+
+State: flag1Ground_flag2Carried Action: GET_FLAG_AND_SCORE
+event: enemyMakeScore reward: -100
+next state: flag1Ground_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 0 0 
+-5 0 0 
+0 0 0 
+0 0 0 
+
+
+
+State: flag1Carried_flag2Carried Action: ATTACK_ENEMY_BASE
+event: enemyKilled reward: 80
+next state: flag1Carried_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 0 0 
+-5 8 0 
+0 0 0 
+0 0 0 
+
+
+
+State: flag1Carried_flag2Carried Action: ATTACK_ENEMY_BASE
+event: killed reward: -40
+next state: flag1Carried_flag2Carried next action: GET_FLAG_AND_SCORE
+Q table: 
+-4 0 0 
+-5 8 0 
+0 0 0 
+0 -2 0 
+
+
+
+State: flag1Carried_flag2Carried Action: GET_FLAG_AND_SCORE
+event: enemyMakeScore reward: -100
+next state: flag1Carried_flag2Carried next action: TAKE_CARE_ENEMY_FLAG
+Q table: 
+-4 0 0 
+-5 8 0 
+0 0 0 
+-5 -2 0 
+
+
+
+State: flag1Carried_flag2Carried Action: TAKE_CARE_ENEMY_FLAG
+event: killed reward: -20
+next state: flag1Carried_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 0 0 
+-5 8 0 
+0 0 0 
+-5 -2 -2 
+
+
+
+State: flag1Carried_flag2Carried Action: ATTACK_ENEMY_BASE
+event: enemyKilled reward: 80
+next state: flag1Carried_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 0 0 
+-5 8 0 
+0 0 0 
+-5 6.2 -2 
+
+
+
+State: flag1Carried_flag2Carried Action: ATTACK_ENEMY_BASE
+event: enemyMakeScore reward: -100
+next state: flag1Carried_flag2Carried next action: TAKE_CARE_ENEMY_FLAG
+Q table: 
+-4 0 0 
+-5 8 0 
+0 0 0 
+-5 -3.8 -2 
+
+
+
+State: flag1Ground_flag2Ground Action: TAKE_CARE_ENEMY_FLAG
+event: enemyKilled reward: 80
+next state: flag1Ground_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 0 0 
+-5 8 0 
+0 0 0 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Ground Action: ATTACK_ENEMY_BASE
+event: enemyKilled reward: 80
+next state: flag1Ground_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 8 0 
+-5 8 0 
+0 0 0 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Ground Action: ATTACK_ENEMY_BASE
+event: killed reward: -20
+next state: flag1Ground_flag2Ground next action: TAKE_CARE_ENEMY_FLAG
+Q table: 
+-4 6 0 
+-5 8 0 
+0 0 0 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Carried Action: TAKE_CARE_ENEMY_FLAG
+event: killed reward: -20
+next state: flag1Ground_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 6 -1.2 
+-5 8 0 
+0 0 0 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Carried Action: ATTACK_ENEMY_BASE
+event: enemyKilled reward: 50
+next state: flag1Ground_flag2Carried next action: TAKE_CARE_ENEMY_FLAG
+Q table: 
+-4 6 -1.2 
+-5 16 0 
+0 0 0 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Carried Action: TAKE_CARE_ENEMY_FLAG
+event: enemyMakeScore reward: -100
+next state: flag1Ground_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 6 -1.2 
+-5 16 -8.400001 
+0 0 0 
+-5 -3.8 3.2 
+
+
+
+State: flag1Carried_flag2Ground Action: ATTACK_ENEMY_BASE
+event: killed reward: -40
+next state: flag1Carried_flag2Ground next action: GET_FLAG_AND_SCORE
+Q table: 
+-4 6 -1.2 
+-5 12.4 -8.400001 
+0 0 0 
+-5 -3.8 3.2 
+
+
+
+State: flag1Carried_flag2Ground Action: GET_FLAG_AND_SCORE
+event: teammateCatchFlag reward: 0
+next state: flag1Carried_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 6 -1.2 
+-5 12.4 -8.400001 
+-2 0 0 
+-5 -3.8 3.2 
+
+
+
+State: flag1Carried_flag2Ground Action: ATTACK_ENEMY_BASE
+event: enemyFlagCatched reward: 100
+next state: flag1Carried_flag2Ground next action: TAKE_CARE_ENEMY_FLAG
+Q table: 
+-4 6 -1.2 
+-5 12.4 -8.400001 
+-2 2 0 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Ground Action: TAKE_CARE_ENEMY_FLAG
+event: killed reward: -20
+next state: flag1Ground_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 6 -1.2 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Ground Action: ATTACK_ENEMY_BASE
+event: enemyKilled reward: 80
+next state: flag1Ground_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 14 -1.2 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Ground Action: ATTACK_ENEMY_BASE
+event: killed reward: -20
+next state: flag1Ground_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 12 -1.2 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Ground Action: ATTACK_ENEMY_BASE
+event: killed reward: -20
+next state: flag1Ground_flag2Ground next action: TAKE_CARE_ENEMY_FLAG
+Q table: 
+-4 10 -1.2 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Ground Action: TAKE_CARE_ENEMY_FLAG
+event: killed reward: -20
+next state: flag1Ground_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 10 -2.08 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Ground Action: ATTACK_ENEMY_BASE
+event: killed reward: -20
+next state: flag1Ground_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 8 -2.08 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Ground Action: ATTACK_ENEMY_BASE
+event: enemyKilled reward: 80
+next state: flag1Ground_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 16 -2.08 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 3.2 
+
+
+
+State: flag1Carried_flag2Carried Action: ATTACK_ENEMY_BASE
+event: enemyMakeScore reward: -100
+next state: flag1Carried_flag2Carried next action: TAKE_CARE_ENEMY_FLAG
+Q table: 
+-4 4.719999 -2.08 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 3.2 
+
+
+
+State: flag1Ground_flag2Ground Action: TAKE_CARE_ENEMY_FLAG
+event: killed reward: -20
+next state: flag1Ground_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 4.719999 -2.08 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 1.352 
+
+
+
+State: flag1Carried_flag2Carried Action: ATTACK_ENEMY_BASE
+event: enemyMakeScore reward: -100
+next state: flag1Carried_flag2Carried next action: TAKE_CARE_ENEMY_FLAG
+Q table: 
+-4 -5.6168 -2.08 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 1.352 
+
+
+
+State: flag1Carried_flag2Ground Action: TAKE_CARE_ENEMY_FLAG
+event: enemyKilled reward: 0
+next state: flag1Carried_flag2Ground next action: GET_FLAG_AND_SCORE
+Q table: 
+-4 -5.6168 -2.08 
+-5 12.4 -8.400001 
+-2 2 -1.4 
+-5 -3.8 6.4168 
+
+
+
+State: flag1Carried_flag2Ground Action: GET_FLAG_AND_SCORE
+event: teammateCatchFlag reward: 0
+next state: flag1Carried_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 -5.6168 -2.08 
+-5 12.4 -8.400001 
+-3.6 2 -1.4 
+-5 -3.8 6.4168 
+
+
+
+State: flag1Carried_flag2Ground Action: ATTACK_ENEMY_BASE
+event: enemyKilled reward: 80
+next state: flag1Carried_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 -5.6168 -2.08 
+-5 12.4 -8.400001 
+-3.6 10 -1.4 
+-5 -3.8 6.4168 
+
+
+
+State: flag1Carried_flag2Ground Action: ATTACK_ENEMY_BASE
+event: killed reward: -20
+next state: flag1Carried_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 -5.6168 -2.08 
+-5 12.4 -8.400001 
+-3.6 8 -1.4 
+-5 -3.8 6.4168 
+
+
+
+State: flag1Ground_flag2Carried Action: ATTACK_ENEMY_BASE
+event: enemyKilled reward: 80
+next state: flag1Ground_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 -5.6168 -2.08 
+-5 12.4 -8.400001 
+-3.6 16.44 -1.4 
+-5 -3.8 6.4168 
+
+
+
+State: flag1Ground_flag2Carried Action: ATTACK_ENEMY_BASE
+event: killed reward: -20
+next state: flag1Ground_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 -5.6168 -2.08 
+-5 10.4 -8.400001 
+-3.6 16.44 -1.4 
+-5 -3.8 6.4168 
+
+
+
+State: flag1Ground_flag2Carried Action: ATTACK_ENEMY_BASE
+event: enemyMakeScore reward: -100
+next state: flag1Ground_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 -5.6168 -2.08 
+-5 0.3999995 -8.400001 
+-3.6 16.44 -1.4 
+-5 -3.8 6.4168 
+
+
+
+State: flag1Ground_flag2Ground Action: ATTACK_ENEMY_BASE
+event: killed reward: -20
+next state: flag1Ground_flag2Ground next action: TAKE_CARE_ENEMY_FLAG
+Q table: 
+-4 -5.6168 -2.08 
+-5 -1.640001 -8.400001 
+-3.6 16.44 -1.4 
+-5 -3.8 6.4168 
+
+
+
+State: flag1Ground_flag2Carried Action: TAKE_CARE_ENEMY_FLAG
+event: enemyKilled reward: 80
+next state: flag1Ground_flag2Carried next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 -5.6168 3.128 
+-5 -1.640001 -8.400001 
+-3.6 16.44 -1.4 
+-5 -3.8 6.4168 
+
+
+
+State: flag1Carried_flag2Carried Action: ATTACK_ENEMY_BASE
+event: enemyMakeScore reward: -100
+next state: flag1Carried_flag2Carried next action: TAKE_CARE_ENEMY_FLAG
+Q table: 
+-4 -5.6168 3.128 
+-5 -10.83432 -8.400001 
+-3.6 16.44 -1.4 
+-5 -3.8 6.4168 
+
+
+
+State: flag1Carried_flag2Ground Action: TAKE_CARE_ENEMY_FLAG
+event: killed reward: -20
+next state: flag1Carried_flag2Ground next action: ATTACK_ENEMY_BASE
+Q table: 
+-4 -5.6168 3.128 
+-5 -10.83432 -8.400001 
+-3.6 16.44 -1.4 
+-5 -3.8 5.41912 
+
+
+

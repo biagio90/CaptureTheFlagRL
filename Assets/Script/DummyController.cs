@@ -11,6 +11,11 @@ public class DummyController : MonoBehaviour {
 	public GameObject flagPrefabs;
 	private Vector3 flagPos;
 
+	//for respawn
+	public float timeToRespoun = 5;
+	//public bool dead = false;
+	private float timer = 0.0f;
+
 	// Use this for initialization
 	void Start () {
 		player = GetComponent<PlayerController> ();
@@ -21,26 +26,34 @@ public class DummyController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		checkForScore ();
+		if(!player.dead){
+			checkForScore ();
 
-		if (mover.arrived){
-			if(player.hasFlag){
-				mover.moveTo(player.myBase.transform.position);
-				return;
-			}
-
-			if(id == 0){
-				// only the original go to catch the flag
-				GameObject flag = GameObject.FindGameObjectWithTag (flagTag);
-				if(flag != null) {
-					mover.moveTo(flag.transform.position);
+			if (mover.arrived){
+				if(player.hasFlag){
+					mover.moveTo(player.myBase.transform.position);
+					return;
 				}
-				return;
-			}
 
-			Vector3 target = getRandomPosition();
-			mover.moveTo(target);
-			
+				if(id == 0){
+					// only the original go to catch the flag
+					GameObject flag = GameObject.FindGameObjectWithTag (flagTag);
+					if(flag != null) {
+						mover.moveTo(flag.transform.position);
+					}
+					return;
+				}
+
+				Vector3 target = getRandomPosition();
+				mover.moveTo(target);
+				
+			}
+		} else {
+			timer += Time.deltaTime;
+			if (timer > timeToRespoun){
+				timer = 0;
+				player.dead = false;
+			}
 		}
 	}
 

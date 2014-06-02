@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour {
 	// Game info
 	private string teamTag;
 	public GameObject gameController;
-	private GameController controller;
+	//private GameController controller;
 	private GameControllerRL controllerRL;
 	public GameObject myBase;
 
@@ -42,13 +42,13 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		nameFile = composeName();
 
-		controller = gameController.GetComponent<GameController>();
+//		controller = gameController.GetComponent<GameController>();
 		controllerRL = gameController.GetComponent<GameControllerRL>();
 
 		mover = GetComponent<MovePlayer> ();
 		action = GetComponent<PlayerAction> ();
 //		playerRL = GetComponent<PlayerRL> ();
-		playerRL = new PlayerRL ();
+//		playerRL = new PlayerRL ();
 
 		teamTag = this.tag;
 		if(teamTag == "team1"){
@@ -64,6 +64,18 @@ public class PlayerController : MonoBehaviour {
 		if(start){
 			timerBegin = Time.time + delayBegin;
 			start = false;
+//
+//			float[,] Qinitial = new float[constantRL.num_states, constantRL.num_actions];
+//			for (int i=0; i<constantRL.num_states;i++){
+//				for (int j=0; j<constantRL.num_actions;j++){
+//					Qinitial[i,j] = constantRL.Qtables[id, i, j];
+//				}
+//			}
+//			playerRL = new PlayerRL (Qinitial);
+//			nextAction = (constantRL.Actions)playerRL.nextAction(
+//				(int)constantRL.Event_start, (int)controllerRL.state);
+
+			playerRL = new PlayerRL ();
 			return;
 		}
 
@@ -139,8 +151,8 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private string composeName(){
-		string dir = @"C:\Users\Biagio\Documents\GitHub\CaptureTheFlagRL\LogFile\";
 		string name = "player" + id;
+		string dir = @"C:\Users\Biagio\Documents\GitHub\CaptureTheFlagRL\LogFile\"+name+@"\";
 		int count = 0;
 
 		string path = dir + name + "_" + count+".txt";

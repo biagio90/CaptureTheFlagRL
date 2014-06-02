@@ -34,7 +34,8 @@ public class Bullet : MonoBehaviour {
 				PlayerController pc = other.gameObject.GetComponent<PlayerController>();
 				if (pc != null) {
 					pc.killPlayer();
-					if(action!=null) action.enemyKilled(pc.hasFlag);
+					if(action!=null && action.getCurrentAction() != constantRL.Actions.GET_FLAG_AND_SCORE)
+						action.enemyKilled(pc.hasFlag);
 				}
 			}
 		}

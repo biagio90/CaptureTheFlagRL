@@ -12,8 +12,13 @@ public class constantRL {
 	{
 		flag1Ground_flag2Ground,
 		flag1Ground_flag2Carried,
+//		flag1Ground_flag2Center,
 		flag1Carried_flag2Ground,
 		flag1Carried_flag2Carried
+//		flag1Carried_flag2Center,
+//		flag1Center_flag2Ground,
+//		flag1Center_flag2Carried,
+//		flag1Center_flag2Center
 	};
 	public const int num_states = 4;
 
@@ -28,7 +33,7 @@ public class constantRL {
 		enemyFlagCatched,
 		enemyCatcherKilled
 	};
-
+	public const int Event_start = -1;
 	public const int num_events = 7;
 
 	// dim [action, event]
@@ -49,14 +54,75 @@ public class constantRL {
 	public const int num_actions = 3;
 
 	// Reinforcement Learning Matrix
-	// dim [state, event]
-//	static public int[,] selectNextState = new int[4, 4]{
-//		{0, 0, 0, 0},
-//		{0, 0, 0, 0},
-//		{0, 0, 0, 0},
-//		{0, 0, 0, 0}
+	// dim [num_players, state, action]
+	static public float[,,] Qtables = new float[5, 4, 3]{
+		{
+			{10, 0, 0},
+			{10, 0, 0},
+			{0, 5, 0},
+			{0, 0, 5}
+		},
+		{
+			{0, 5, 0},
+			{0, 0, 5},
+			{0, 5, 0},
+			{0, 0, 5}
+		},
+		{
+			{0, 5, 0},
+			{0, 0, 5},
+			{0, 5, 0},
+			{0, 0, 5}
+		},
+		{
+			{0, 5, 0},
+			{0, 0, 5},
+			{0, 5, 0},
+			{0, 0, 5}
+		},
+		{
+			{0, 5, 0},
+			{0, 0, 5},
+			{0, 5, 0},
+			{0, 0, 5}
+		}
+	};
+
+//	// dim [num_players, state, action]
+//	static public float[,,] Qtables = new float[5, 4, 3]{
+//	   {
+//			{0, 0, 0},
+//			{0, 0, 0},
+//			{0, 0, 0},
+//			{0, 0, 0}
+//		},
+//		{
+//			{0, 0, 0},
+//			{0, 0, 0},
+//			{0, 0, 0},
+//			{0, 0, 0}
+//		},
+//		{
+//			{0, 0, 0},
+//			{0, 0, 0},
+//			{0, 0, 0},
+//			{0, 0, 0}
+//		},
+//		{
+//			{0, 0, 0},
+//			{0, 0, 0},
+//			{0, 0, 0},
+//			{0, 0, 0}
+//		},
+//		{
+//			{0, 0, 0},
+//			{0, 0, 0},
+//			{0, 0, 0},
+//			{0, 0, 0}
+//		}
+//
 //	};
-	
+//	
 //
 //	static public float[,] Q = new float[8, 8]{
 //		{0, 0, 0, 0, 0, 0, 0, 0},

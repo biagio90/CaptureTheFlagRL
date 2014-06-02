@@ -9,9 +9,12 @@ public class PickUpFlag : MonoBehaviour {
 	{
 		if (other.tag == teamTag)
 		{
-			Destroy(gameObject);
-			PlayerController player = other.GetComponent<PlayerController>();
-			player.catchTheFLag();
+			PlayerAction action = other.GetComponent<PlayerAction>();
+			if(action == null || action.getCurrentAction() == constantRL.Actions.GET_FLAG_AND_SCORE){
+				Destroy(gameObject);
+				PlayerController player = other.GetComponent<PlayerController>();
+				player.catchTheFLag();
+			} 
 		} else if (other.tag != "bullet"){
 			if(Vector3.Distance(transform.position, flagPos) > 2) {
 				transform.position = flagPos;
