@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Pathfinding;
 
 public class PlayerController : MonoBehaviour {
 	public int id;
@@ -25,7 +26,9 @@ public class PlayerController : MonoBehaviour {
 	private PlayerAction action;
 	private PlayerRL playerRL;
 	private bool start = true;
-	
+	public int max_life = 3;
+	private int life;
+
 	//for respawn
 	public float timeToRespoun = 5;
 	public bool dead = false;
@@ -58,6 +61,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		delayBegin = id;
+		life = max_life;
 	}
 
 	void Update () {
@@ -109,21 +113,48 @@ public class PlayerController : MonoBehaviour {
 	}
 	
 	public void killPlayer(){
+		life -= 1;
+		if ( life == 0){
+			killPlayerSeriously ();
+		}
+	}
+
+	private void killPlayerSeriously(){
+		life = max_life;
 		Instantiate(playerExplosion, transform.position, transform.rotation);
 		transform.Find("EyeBall").gameObject.SetActive(false);
 		transform.Find("WheelBall").gameObject.SetActive(false);
-
+		
 		if (hasFlag) {
 			Instantiate(flagPrefabs, transform.position, Quaternion.identity);
 			transform.Find("flag").gameObject.SetActive(false);
 		}
 		hasFlag = false;
+		if(tag == "team1") updateGraphWeights (100);
+		
 		transform.position = myBase.transform.position;
-		mover.reset ();
-
+		
+		if(mover!=null) mover.reset ();
+		
 		dead = true;
-
+		
 		if(action!=null) action.getKilled ();
+
+	}
+
+	private void updateGraphWeights(int penalty){
+		Vector3 center = transform.position;
+		center.y = 0;
+		Vector3 size = new Vector3 (2, 2, 2);
+
+		GraphUpdateObject graphUpdate = new GraphUpdateObject ();
+		graphUpdate.addPenalty = penalty;
+
+		for (int i=1; i<7; i++){
+			Bounds b = new Bounds (center, size*i);
+			graphUpdate.bounds = b;
+			AstarPath.active.UpdateGraphs (graphUpdate);
+		}
 
 	}
 

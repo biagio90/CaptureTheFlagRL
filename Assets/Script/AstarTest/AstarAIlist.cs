@@ -15,6 +15,7 @@ public class AstarAIlist : MonoBehaviour {
 	private int currentWaypoint = 0;
 
 	private int index_target = 0;
+	private MovePlayer mover;
 
 	// Use this for initialization
 	void Start () {
@@ -24,10 +25,11 @@ public class AstarAIlist : MonoBehaviour {
 			new Vector3(0, 1, 0)
 		};
 
-		Path p = ABPath.Construct (transform.position, target[0], OnPathComplete);
-		AstarPath.StartPath (p);
-		AstarPath.WaitForPath (p);
-
+//		Path p = ABPath.Construct (transform.position, target[index_target], OnPathComplete);
+//		AstarPath.StartPath (p);
+//		AstarPath.WaitForPath (p);
+		mover = GetComponent<MovePlayer> ();
+		//mover.moveTo (target[index_target]);
 	}
 	
 	public void OnPathComplete (Path p) {
@@ -42,34 +44,38 @@ public class AstarAIlist : MonoBehaviour {
 		}
 	}
 	public void FixedUpdate () {
-		if (path == null) {
-			//We have no path to move after yet
-			return;
+		if(mover.arrived && index_target < target.Length){
+			mover.moveTo (target[index_target]);
+//			index_target++;
 		}
-		
-		if (currentWaypoint >= path.vectorPath.Count) {
-			//Debug.Log ("End Of Path Reached");
-			rigidbody.velocity = Vector3.zero;
-			rigidbody.angularVelocity = Vector3.zero;
-			path = null;
-
-			index_target++;
-			if (index_target < target.Length){
-				Path p = ABPath.Construct (transform.position, target[index_target],
-				                           OnPathComplete);
-				AstarPath.StartPath (p);
-				AstarPath.WaitForPath(p);
-			}
-			return;
-		}
-		Vector3 point = path.vectorPath [currentWaypoint];
-		point.y = transform.position.y;
-		makeMove (point);
-		if (Vector3.Distance (transform.position,point) < nextWaypointDistance) {
-			currentWaypoint++;
-			//			Debug.Log("Current point: "+ currentWaypoint);
-			return;
-		}
+//		if (path == null) {
+//			//We have no path to move after yet
+//			return;
+//		}
+//		
+//		if (currentWaypoint >= path.vectorPath.Count) {
+//			//Debug.Log ("End Of Path Reached");
+//			rigidbody.velocity = Vector3.zero;
+//			rigidbody.angularVelocity = Vector3.zero;
+//			path = null;
+//
+//			index_target++;
+//			if (index_target < target.Length){
+//				Path p = ABPath.Construct (transform.position, target[index_target],
+//				                           OnPathComplete);
+//				AstarPath.StartPath (p);
+//				AstarPath.WaitForPath(p);
+//			}
+//			return;
+//		}
+//		Vector3 point = path.vectorPath [currentWaypoint];
+//		point.y = transform.position.y;
+//		makeMove (point);
+//		if (Vector3.Distance (transform.position,point) < nextWaypointDistance) {
+//			currentWaypoint++;
+//			//			Debug.Log("Current point: "+ currentWaypoint);
+//			return;
+//		}
 	}
 	
 	private void makeMove(Vector3 destination) {

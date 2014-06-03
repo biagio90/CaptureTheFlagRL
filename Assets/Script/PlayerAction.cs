@@ -109,7 +109,8 @@ public class PlayerAction : MonoBehaviour {
 					mover.moveTo(enemyFlag.transform.position);
 					return;
 				}
-				mover.moveTo(getRandomPosition());
+				//mover.moveTo(getRandomPosition());
+				attackClosest();
 			} else {
 				//string enemyTag = (tag=="team1") ? "team2" : "team1";
 				GameObject enemy = controller.getFlagCatcher(enemyTag);

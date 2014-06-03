@@ -1,18 +1,19 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\PlayerController.cs">
     <Files>
-      <File FileName="Assets\Script\ReinforcementLearning\constantRL.cs" Line="40" Column="42" />
-      <File FileName="Assets\Script\PlayerController.cs" Line="143" Column="84" />
-      <File FileName="Assets\Script\GameController.cs" Line="40" Column="5" />
-      <File FileName="Assets\Script\stand_alone_script\PickUpFlag.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\GameControllerRL.cs" Line="32" Column="3" />
-      <File FileName="Assets\Script\stand_alone_script\Bullet.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\stand_alone_script\Shooting.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\PlayerAction.cs" Line="94" Column="3" />
-      <File FileName="Assets\Script\MovePlayer.cs" Line="1" Column="1" />
-      <File FileName="Assets\Plugins\AstarPathfindingProject\Core\AstarPath.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\ReinforcementLearning\constantRL.cs" Line="94" Column="3" />
+      <File FileName="Assets\Script\ReinforcementLearning\constantRL.cs" Line="79" Column="2" />
+      <File FileName="Assets\Script\PlayerController.cs" Line="122" Column="24" />
+      <File FileName="Assets\Script\GameControllerRL.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\PlayerAction.cs" Line="251" Column="17" />
+      <File FileName="Assets\Script\DummyController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\ReinforcementLearning\PlayerRL.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\GameController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\AstarTest\AstarAIlist.cs" Line="3" Column="1" />
+      <File FileName="Assets\Script\MovePlayer.cs" Line="86" Column="3" />
+      <File FileName="Assets\Script\AstarTest\modifyWeight.cs" Line="13" Column="47" />
+      <File FileName="Assets\Script\stand_alone_script\Bullet.cs" Line="14" Column="28" />
+      <File FileName="Assets\Script\stand_alone_script\Shooting.cs" Line="18" Column="12" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

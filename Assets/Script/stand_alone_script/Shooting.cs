@@ -15,7 +15,7 @@ public class Shooting : MonoBehaviour {
 	
 	private float nextTime = 0.0f;
 
-	void Update() {
+	void FixedUpdate() {
 		if (Time.time > nextTime) {
 			nextTime = Time.time + delay;
 
